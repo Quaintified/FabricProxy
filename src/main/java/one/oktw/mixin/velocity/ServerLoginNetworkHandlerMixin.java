@@ -1,6 +1,7 @@
 package one.oktw.mixin.velocity;
 
 import com.mojang.authlib.GameProfile;
+import io.netty.buffer.ByteBuf;
 import net.fabricmc.fabric.mixin.networking.accessor.LoginQueryRequestS2CPacketAccessor;
 import net.fabricmc.fabric.mixin.networking.accessor.LoginQueryResponseC2SPacketAccessor;
 import net.minecraft.network.ClientConnection;
@@ -56,7 +57,7 @@ public abstract class ServerLoginNetworkHandlerMixin {
                 loginPacket = loginHelloC2SPacket;
             }
             this.velocityLoginQueryId = java.util.concurrent.ThreadLocalRandom.current().nextInt();
-            LoginQueryRequestS2CPacket packet = new LoginQueryRequestS2CPacket();
+            LoginQueryRequestS2CPacket packet = new LoginQueryRequestS2CPacket(null);
             ((LoginQueryRequestS2CPacketAccessor) packet).setQueryId(velocityLoginQueryId);
             ((LoginQueryRequestS2CPacketAccessor) packet).setChannel(VelocityLib.PLAYER_INFO_CHANNEL);
             ((LoginQueryRequestS2CPacketAccessor) packet).setPayload(new PacketByteBuf(EMPTY_BUFFER));
